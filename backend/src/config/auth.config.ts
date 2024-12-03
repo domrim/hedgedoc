@@ -50,6 +50,7 @@ export interface OidcConfig extends InternalIdentifier {
   displayNameField: string;
   profilePictureField: string;
   emailField: string;
+  enableRegistration?: boolean;
 }
 
 export interface AuthConfig {
@@ -147,6 +148,7 @@ const authSchema = Joi.object({
         displayNameField: Joi.string().default('name').optional(),
         profilePictureField: Joi.string().default('picture').optional(),
         emailField: Joi.string().default('email').optional(),
+        enableRegistration: Joi.boolean().default(true).optional(),
       }).optional(),
     )
     .optional(),
@@ -217,6 +219,7 @@ export default registerAs('authConfig', () => {
     profilePictureField:
       process.env[`HD_AUTH_OIDC_${oidcName}_PROFILE_PICTURE_FIELD`],
     emailField: process.env[`HD_AUTH_OIDC_${oidcName}_EMAIL_FIELD`],
+    enableRegistration: process.env[`HD_AUTH_OIDC_${oidcName}_ENABLE_REGISTER`],
   }));
 
   let syncSource = process.env.HD_AUTH_SYNC_SOURCE;
